@@ -148,6 +148,8 @@ Track artwork is loaded from external GitHub repository. Expected URL format: `h
 
 Failed image loads are handled gracefully without affecting card layout or functionality.
 
+https://github.com/mcmillon/music-week-album-art
+
 ## Known Limitations
 
 - No persistent storage between sessions (data refreshes on page reload)
