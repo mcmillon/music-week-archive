@@ -146,7 +146,7 @@ All dependencies loaded via CDN from cdnjs.cloudflare.com.
 
 Track artwork is loaded from external GitHub repository. Expected URL format: `https://raw.githubusercontent.com/[organization]/[repository]/[branch]/[trackid].jpg`
 
-Failed image loads are handled gracefully without affecting card layout or functionality.
+Failed image loads are handled without affecting card layout or functionality.
 
 https://github.com/mcmillon/music-week-album-art
 
