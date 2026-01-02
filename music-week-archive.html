@@ -77,12 +77,14 @@
     color: #9ca3af;
     position: relative;
     margin-bottom: 8px;
+    overflow: hidden;
 }
 
 .card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 .card-overlay {
@@ -855,6 +857,28 @@ th.header-icon:hover svg {
     .stats-grid {
         grid-template-columns: 1fr;
     }
+    
+    #recaps > div > a {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0 !important;
+    }
+    
+    #recaps > div > a img {
+        width: 100% !important;
+        height: 200px !important;
+        margin: 0 !important;
+        border-radius: 12px 12px 0 0 !important;
+    }
+    
+    #recaps > div > a > div {
+        padding: 16px !important;
+    }
+    
+    #recaps > div {
+        padding: 12px !important;
+        max-width: 100% !important;
+    }
 }
 
 .stat-card {
@@ -1205,39 +1229,51 @@ tr {
         
         .albums-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
+            margin-bottom: 30px;
+            box-sizing: border-box;
+            width: 100%;
+            align-items: stretch;
         }
-        
+
+        @media (max-width: 900px) {
+            .albums-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 16px;
+            }
+        }
+
         @media (max-width: 768px) {
             .albums-grid {
                 grid-template-columns: 1fr;
                 gap: 16px;
             }
         }
-        
+
         @media (max-width: 480px) {
             .albums-grid {
-                grid-template-columns: 1fr;
                 gap: 12px;
-                width: 100%;
+                grid-template-columns: 1fr;
+                padding: 0 4px;
                 box-sizing: border-box;
             }
         }
         
         .album-card {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
             border-radius: 8px;
-            padding: 16px;
+            overflow: hidden;
+            border: 2px solid transparent;
             transition: all 0.2s;
             cursor: pointer;
-            min-width: 0;
-            width: 100%;
-            box-sizing: border-box;
+            text-decoration: none;
+            color: inherit;
             display: flex;
             flex-direction: column;
-            height: 100%;
+            padding: 16px;
+            box-sizing: border-box;
+            min-width: 0;
         }
         
         @media (max-width: 480px) {
@@ -1638,6 +1674,12 @@ tr {
     font-size: 12px;
 }
 
+.contributor-card-playlists {
+    font-weight: 600;
+    color: #E3836D;
+    font-size: 12px;
+}
+
 .contributor-card-popularity {
     display: flex;
     align-items: center;
@@ -1700,6 +1742,7 @@ tr {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    gap: 12px;
     height: 100%;
 }
 
@@ -1831,7 +1874,6 @@ tr {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 12px;
     font-size: 11px;
     flex-wrap: wrap;
     gap: 8px;
@@ -1894,6 +1936,8 @@ tr {
     border-color: #E3836D;
     transform: scale(0.98);
 }
+
+
 
 /* Overlap Card Layout */
 .overlap-card {
@@ -2099,7 +2143,7 @@ tr {
 
     .track-card-with-art {
         display: flex;
-        gap: 16px;
+        gap: 12px;
         align-items: flex-start;
         width: 100%;
     }
@@ -2522,7 +2566,7 @@ tr {
     </div>
     <div style="flex: 1;">
         <h1 style="margin: 0; line-height: 1.2;">Music Week Archive</h1>
-        <p style="margin: 4px 0 0 0; font-size: 14px; color: #757575;">2018 – 2024</p>
+        <p style="margin: 4px 0 0 0; font-size: 14px; color: #757575;">2018 – 2025</p>
     </div>
 </div>
         
@@ -2607,6 +2651,13 @@ tr {
             </svg>
             Tracks
         </button>
+        <button onclick="switchTabMobile('recaps', event)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon lucide lucide-square-pen">
+                <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path>
+            </svg>
+            Recaps
+        </button>
     </div>    
 <div style="display: flex; align-items: center; width: 100%; position: relative; gap: 20px;">
     <!-- Desktop tabs -->
@@ -2665,6 +2716,12 @@ tr {
                 <circle cx="18" cy="16" r="3"></circle>
             </svg>Tracks
         </button>
+        <button class="tab" onclick="switchTab('recaps')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon lucide lucide-square-pen">
+                <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path>
+            </svg>Recaps
+        </button>
     </div>
 
     
@@ -2678,6 +2735,48 @@ tr {
                 <div id="contributors" class="tab-content"></div>
                 <div id="partners" class="tab-content"></div>
                 <div id="playlists" class="tab-content"></div>
+                <div id="recaps" class="tab-content">
+                    <style>
+                        #recaps, #recaps * {
+                            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+                            line-height: inherit !important;
+                            letter-spacing: normal !important;
+                            font-variant: normal !important;
+                            text-transform: none !important;
+                        }
+                        
+                        #recaps a, #recaps a * {
+                            font-style: normal !important;
+                            font-variant-numeric: normal !important;
+                            font-kerning: auto !important;
+                        }
+                    </style>
+                    <div style="display: flex; flex-direction: column; gap: 20px; padding: 20px; max-width: 600px;">
+                        <a href="https://treymcmillon.com/mw/2025" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 20px; background: white; border-radius: 12px; overflow: hidden; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); border: 1px solid rgba(227, 131, 109, 0.1); cursor: pointer;" onmouseover="this.style.borderColor='#E3836D';" onmouseout="this.style.borderColor='rgba(227, 131, 109, 0.1)';">
+                            <img src="https://raw.githubusercontent.com/mcmillon/music-week-archive/main/blog/mw-25.jpg" alt="2025 Recap" style="width: 140px; height: 140px; object-fit: cover; flex-shrink: 0; margin: 12px 0 12px 12px; border-radius: 8px;">
+                            <div style="padding: 20px; flex: 1;">
+                                <div style="font-size: 14px; color: #E3836D; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Latest</div>
+                                <h3 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700; color: #222;">2025 Music Week Recap</h3>
+                                <p style="margin: 0; font-size: 14px; color: #666; line-height: 1.5;">Explore the top tracks and artists from 2025</p>
+                                <div style="margin-top: 12px; display: flex; align-items: center; gap: 6px; color: #E3836D; font-weight: 600; font-size: 13px;">
+                                    View recap <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://treymcmillon.com/mw/2024" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 20px; background: white; border-radius: 12px; overflow: hidden; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); border: 1px solid rgba(227, 131, 109, 0.1); cursor: pointer;" onmouseover="this.style.borderColor='#E3836D';" onmouseout="this.style.borderColor='rgba(227, 131, 109, 0.1)';">
+
+                            <img src="https://raw.githubusercontent.com/mcmillon/music-week-archive/main/blog/mw-24.jpg" alt="2024 Recap" style="width: 140px; height: 140px; object-fit: cover; flex-shrink: 0; margin: 12px 0 12px 12px; border-radius: 8px;">
+                            <div style="padding: 20px; flex: 1;">
+                                <div style="font-size: 14px; color: #999; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Previous</div>
+                                <h3 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700; color: #222;">2024 Music Week Recap</h3>
+                                <p style="margin: 0; font-size: 14px; color: #666; line-height: 1.5;">Explore the top tracks and artists from 2024</p>
+                                <div style="margin-top: 12px; display: flex; align-items: center; gap: 6px; color: #999; font-weight: 600; font-size: 13px;">
+                                    View recap <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -2750,7 +2849,7 @@ tr {
         }
 
 function loadCSVFromGitHub() {
-    const csvUrl = "https://cdn.jsdelivr.net/gh/mcmillon/music-week-archive@main/Full%20Archive-test-mod2%2Bplaylists.csv";
+    const csvUrl = "https://raw.githubusercontent.com/mcmillon/music-week-archive/main/music-week-archive.csv";
 
     document.getElementById("loading").style.display = "block";
     document.getElementById("results").style.display = "none";
@@ -2774,6 +2873,10 @@ function loadCSVFromGitHub() {
                     try {
                         analyzeData(results.data);
                         console.log("Data analysis complete");
+                        
+                        // Also load the albums CSV for the Albums page
+                        loadAlbumsCSV();
+                        
                         document.getElementById("loading").style.display = "none";
                         document.getElementById("results").style.display = "block";
                     } catch (e) {
@@ -2793,6 +2896,80 @@ function loadCSVFromGitHub() {
             console.error("Fetch error:", err);
             alert("Error loading CSV from GitHub:\n" + err.message);
             document.getElementById("loading").style.display = "none";
+        });
+}
+
+function loadAlbumsCSV() {
+    const albumsCsvUrl = "https://raw.githubusercontent.com/mcmillon/music-week-archive/main/music-week-archive_albums.csv";
+    
+    console.log("Starting to load albums CSV from:", albumsCsvUrl);
+    
+    fetch(albumsCsvUrl)
+        .then(response => {
+            console.log("Albums CSV fetch response status:", response.status);
+            if (!response.ok) throw new Error("HTTP error " + response.status);
+            return response.text();
+        })
+        .then(csvText => {
+            console.log("Albums CSV text received, length:", csvText.length);
+            Papa.parse(csvText, {
+                header: true,
+                skipEmptyLines: true,
+                dynamicTyping: false,
+                complete: function (results) {
+                    console.log("Albums CSV parsing complete, rows:", results.data.length);
+                    
+                    // Process albums CSV data
+                    const albumsMap = {};
+                    
+                    results.data.forEach(row => {
+                        const albumName = row['Album Name'];
+                        const artist = row['Artist Name(s)'];
+                        const year = row['Added At'] ? extractYearFromAddedAt(row['Added At']) : 'N/A';
+                        const addedBy = row['Added By'];
+                        const albumId = row['Album ID'];
+                        const releaseDate = row['Release Date'] || '';
+                        const genres = row['Genres'] ? row['Genres'].split(/[;,]/).map(g => g.trim()).filter(g => g) : [];
+                        
+                        if (albumName) {
+                            if (!albumsMap[albumName]) {
+                                albumsMap[albumName] = {
+                                    name: albumName,
+                                    artist: artist || 'Unknown',
+                                    year: year,
+                                    albumId: albumId || '',
+                                    releaseDate: releaseDate,
+                                    contributors: {},
+                                    genres: {},
+                                    trackIds: new Set()
+                                };
+                            }
+                            
+                            // Track contributor
+                            if (addedBy) {
+                                albumsMap[albumName].contributors[addedBy] = (albumsMap[albumName].contributors[addedBy] || 0) + 1;
+                            }
+                            
+                            // Track genres
+                            genres.forEach(genre => {
+                                albumsMap[albumName].genres[genre] = (albumsMap[albumName].genres[genre] || 0) + 1;
+                            });
+                        }
+                    });
+                    
+                    // Store the processed albums data
+                    globalData.albumsFromCSV = Object.entries(albumsMap).map(([name, data]) => [name, name]); // Keep same format as before
+                    globalData.albumsDataMapFromCSV = albumsMap;
+                    
+                    console.log("✓ Albums CSV successfully loaded:", globalData.albumsFromCSV.length, "albums");
+                },
+                error: function (error) {
+                    console.error("✗ Albums CSV Parse error:", error);
+                }
+            });
+        })
+        .catch(err => {
+            console.error("✗ Albums CSV Fetch error:", err);
         });
 }
         
@@ -2932,19 +3109,35 @@ function filterContributorCards(searchTerm) {
 }
 
 function filterTrackCards(searchTerm) {
-    const cards = document.querySelectorAll('.track-card');
+    const cards = document.querySelectorAll('#tracks-cards .track-card');
     const filter = searchTerm.toLowerCase();
     
+    let visibleCount = 0;
     cards.forEach(card => {
+        // Only apply search filter if the card is not already hidden by year filter
+        if (card.style.display === 'none') {
+            return; // Skip cards that are hidden by year filter
+        }
+        
         const name = card.getAttribute('data-name');
         const artist = card.getAttribute('data-artist');
         
         if (name.includes(filter) || artist.includes(filter)) {
             card.style.display = '';
+            visibleCount++;
         } else {
             card.style.display = 'none';
         }
     });
+    updateTrackCountDisplay(visibleCount);
+}
+
+function updateTrackCountDisplay(count) {
+    const countDisplay = document.getElementById('track-count-display');
+    if (countDisplay) {
+        const totalCount = window.totalTrackCount || 0;
+        countDisplay.textContent = `Showing ${count} of ${totalCount} track${totalCount !== 1 ? 's' : ''}`;
+    }
 }
 
 function filterArtistCards(searchTerm) {
@@ -2977,6 +3170,387 @@ function filterAlbumCards(searchTerm) {
     });
 }
 
+function playRandomAlbum() {
+    // Get all album IDs from the loaded albums data map
+    const albumIds = [];
+    const albumDetails = {};
+    
+    if (globalData.albumsDataMapFromCSV && typeof globalData.albumsDataMapFromCSV === 'object') {
+        // Extract Album IDs and details from the albums data map
+        Object.entries(globalData.albumsDataMapFromCSV).forEach(([albumName, data]) => {
+            if (data.albumId && data.albumId.trim()) {
+                const albumId = data.albumId.trim();
+                albumIds.push(albumId);
+                albumDetails[albumId] = {
+                    name: albumName,
+                    artist: data.artist || 'Unknown',
+                    year: data.year || 'N/A',
+                    contributors: Object.keys(data.contributors || {}).sort()
+                };
+            }
+        });
+    }
+    
+    if (albumIds.length === 0) {
+        alert('No albums with Spotify IDs found in the data.');
+        return;
+    }
+    
+    // Pick a random album ID
+    const randomAlbumId = albumIds[Math.floor(Math.random() * albumIds.length)];
+    const details = albumDetails[randomAlbumId];
+    
+    // Show modal with album details
+    showAlbumSelectionModal(randomAlbumId, details);
+}
+
+function showAlbumSelectionModal(albumId, details) {
+    // Create modal overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        overflow: auto;
+    `;
+    
+    // Create modal content
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        background: white;
+        border-radius: 12px;
+        padding: 32px;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        margin: auto;
+    `;
+    
+    // Get album art - find first track ID from the album
+    let albumArtUrl = '';
+    if (globalData.raw && Array.isArray(globalData.raw)) {
+        const firstTrackInAlbum = globalData.raw.find(row => row['Album Name'] === details.name);
+        if (firstTrackInAlbum && firstTrackInAlbum['Track ID']) {
+            albumArtUrl = `https://raw.githubusercontent.com/mcmillon/music-week-album-art/main/${firstTrackInAlbum['Track ID']}.jpg`;
+        }
+    }
+    
+    // Format contributor names from email format (first.last) to "First Last"
+    const formattedContributors = details.contributors.map(c => {
+        if (c === 'trey.mcmillon') {
+            return 'Trey McMillon';
+        }
+        if (c.includes('.')) {
+            const parts = c.split('.');
+            const first = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+            const last = parts[1].charAt(0).toUpperCase() + parts[1].slice(1);
+            return `${first} ${last}`;
+        }
+        return c;
+    });
+    
+    const contributorsList = formattedContributors.length > 0 
+        ? formattedContributors.map(name => `${name} (${details.year})`).join(', ')
+        : 'Unknown';
+    
+    modal.innerHTML = `
+        <div style="margin-bottom: 24px;">
+            <div style="font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Random Selection</div>
+            ${albumArtUrl ? `<img src="${albumArtUrl}" alt="${details.name}" style="width: 120px; height: 120px; border-radius: 8px; object-fit: cover; margin: 0 auto 16px; display: block; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);" onerror="this.style.display='none';">` : ''}
+            <div style="font-size: 28px; font-weight: 700; color: #333; margin-bottom: 8px; line-height: 1.3;">${details.name}</div>
+            <div style="font-size: 16px; color: #666; margin-bottom: 4px;">${details.artist}</div>
+            <div style="font-size: 13px; color: #999; margin-bottom: 24px;">Selected by ${contributorsList}</div>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+            <button onclick="this.closest('[data-modal]').remove(); playRandomAlbum();" style="background: #f3f4f6; color: #333; border: none; padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;" 
+                onmouseover="this.style.background='#e5e7eb';" 
+                onmouseout="this.style.background='#f3f4f6';">
+                Pick Again
+            </button>
+            <button onclick="window.open('https://open.spotify.com/album/${albumId}', '_blank'); this.closest('[data-modal]').remove();" style="background: #E3836D; color: white; border: none; padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;" 
+                onmouseover="this.style.background='#c97456';" 
+                onmouseout="this.style.background='#E3836D';">
+                Play on Spotify
+            </button>
+        </div>
+    `;
+    
+    const container = document.createElement('div');
+    container.setAttribute('data-modal', 'true');
+    container.appendChild(overlay);
+    overlay.appendChild(modal);
+    
+    // Close on overlay click
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            container.remove();
+        }
+    });
+    
+    document.body.appendChild(container);
+}
+
+function playRandomPlaylist() {
+    const GITHUB_BASE_URL = "https://raw.githubusercontent.com/mcmillon/music-week-archive/main/covers";
+    
+    // Get playlists from global data (set during renderPlaylists)
+    if (!globalData.playlists || globalData.playlists.length === 0) {
+        alert('No playlists available. Please make sure the Playlists page is loaded.');
+        return;
+    }
+    
+    // Pick a random playlist
+    const randomPlaylist = globalData.playlists[Math.floor(Math.random() * globalData.playlists.length)];
+    
+    const playlistId = randomPlaylist.uri.split(':').pop();
+    const spotifyUrl = `https://open.spotify.com/playlist/${playlistId}`;
+    const imageUrl = `${GITHUB_BASE_URL}/${randomPlaylist.uri}.jfif`;
+    
+    // Format contributors with names
+    const formattedContributors = randomPlaylist.contributors.map(c => {
+        if (c === 'trey.mcmillon') {
+            return 'Trey McMillon';
+        }
+        if (c.includes('.')) {
+            const parts = c.split('.');
+            const first = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+            const last = parts[1].charAt(0).toUpperCase() + parts[1].slice(1);
+            return `${first} ${last}`;
+        }
+        return c;
+    });
+    
+    // Use most recent year
+    const year = randomPlaylist.years.length > 0 ? randomPlaylist.years[0] : 'N/A';
+    
+    // Show modal with playlist details
+    showPlaylistSelectionModal(randomPlaylist.name, formattedContributors, year, spotifyUrl, imageUrl);
+}
+
+function showPlaylistSelectionModal(name, contributors, year, spotifyUrl, imageUrl) {
+    // Create modal overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        overflow: auto;
+    `;
+    
+    // Create modal content
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        background: white;
+        border-radius: 12px;
+        padding: 32px;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        margin: auto;
+    `;
+    
+    const contributorsList = Array.isArray(contributors) 
+        ? contributors.map(c => `${c} (${year})`).join(', ')
+        : `${contributors} (${year})`;
+    
+    modal.innerHTML = `
+        <div style="margin-bottom: 24px;">
+            <div style="font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Random Selection</div>
+            ${imageUrl ? `<img src="${imageUrl}" alt="${name}" style="width: 120px; height: 120px; border-radius: 8px; object-fit: cover; margin: 0 auto 16px; display: block; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);" onerror="this.style.display='none';">` : ''}
+            <div style="font-size: 28px; font-weight: 700; color: #333; margin-bottom: 8px; line-height: 1.3;">${name}</div>
+            <div style="font-size: 13px; color: #999; margin-bottom: 24px;">Added by ${contributorsList}</div>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+            <button onclick="this.closest('[data-modal]').remove(); playRandomPlaylist();" style="background: #f3f4f6; color: #333; border: none; padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;" 
+                onmouseover="this.style.background='#e5e7eb';" 
+                onmouseout="this.style.background='#f3f4f6';">
+                Pick Again
+            </button>
+            <button onclick="window.open('${spotifyUrl}', '_blank'); this.closest('[data-modal]').remove();" style="background: #E3836D; color: white; border: none; padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;" 
+                onmouseover="this.style.background='#c97456';" 
+                onmouseout="this.style.background='#E3836D';">
+                Play on Spotify
+            </button>
+        </div>
+    `;
+    
+    const container = document.createElement('div');
+    container.setAttribute('data-modal', 'true');
+    container.appendChild(overlay);
+    overlay.appendChild(modal);
+    
+    // Close on overlay click
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            container.remove();
+        }
+    });
+    
+    document.body.appendChild(container);
+}
+
+function playRandomTrack() {
+    // Get all track IDs from the current tracks view
+    const trackCards = document.querySelectorAll('#tracks-cards .track-card[data-name]');
+    const visibleTracks = Array.from(trackCards).filter(card => card.style.display !== 'none');
+    
+    if (visibleTracks.length === 0) {
+        alert('No tracks available to play.');
+        return;
+    }
+    
+    // Pick a random visible track
+    const randomCard = visibleTracks[Math.floor(Math.random() * visibleTracks.length)];
+    const trackLink = randomCard.tagName === 'A' ? randomCard : randomCard.querySelector('a');
+    
+    if (trackLink && trackLink.href) {
+        // Extract track ID from Spotify URL
+        const trackId = trackLink.href.split('/').pop();
+        const trackName = randomCard.getAttribute('data-name') || 'Track';
+        
+        // Get track info from the card
+        const cardContent = randomCard.querySelector('.track-card-name');
+        const artistElement = randomCard.querySelector('.track-card-artist');
+        const contributorsText = randomCard.querySelector('.track-card-contributors-text');
+        
+        // Extract year from the card
+        let year = 'N/A';
+        const yearElement = randomCard.querySelector('.track-card-year-value');
+        if (yearElement) {
+            year = yearElement.textContent;
+        }
+        
+        // Get all contributors from globalData by searching all rows with this track ID
+        let contributors = [];
+        if (globalData.raw && Array.isArray(globalData.raw)) {
+            const trackRows = globalData.raw.filter(row => row['Track ID'] === trackId);
+            const contributorSet = new Set();
+            trackRows.forEach(row => {
+                if (row['Added By']) {
+                    contributorSet.add(row['Added By']);
+                }
+            });
+            contributors = Array.from(contributorSet);
+        }
+        
+        const details = {
+            name: cardContent ? cardContent.textContent : trackName,
+            artist: artistElement ? artistElement.textContent : 'Unknown',
+            trackId: trackId,
+            year: year,
+            contributors: contributors
+        };
+        
+        showTrackSelectionModal(details);
+    } else {
+        alert('Could not find track information.');
+    }
+}
+
+function showTrackSelectionModal(details) {
+    // Create modal overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        overflow: auto;
+    `;
+    
+    // Create modal content
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        background: white;
+        border-radius: 12px;
+        padding: 32px;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        margin: auto;
+    `;
+    
+    // Get track art
+    const trackArtUrl = `https://raw.githubusercontent.com/mcmillon/music-week-album-art/main/${details.trackId}.jpg`;
+    
+    // Format contributor names
+    const formattedContributors = (details.contributors || []).map(c => {
+        if (c === 'trey.mcmillon') {
+            return 'Trey McMillon';
+        }
+        if (c.includes('.')) {
+            const parts = c.split('.');
+            const first = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+            const last = parts[1].charAt(0).toUpperCase() + parts[1].slice(1);
+            return `${first} ${last}`;
+        }
+        return c;
+    });
+    
+    const contributorsList = formattedContributors.length > 0 
+        ? formattedContributors.map(name => `${name} (${details.year})`).join(', ')
+        : 'Unknown';
+    
+    modal.innerHTML = `
+        <div style="margin-bottom: 24px;">
+            <div style="font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Random Track</div>
+            <img src="${trackArtUrl}" alt="${details.name}" style="width: 120px; height: 120px; border-radius: 8px; object-fit: cover; margin: 0 auto 16px; display: block; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);" onerror="this.style.display='none';">
+            <div style="font-size: 28px; font-weight: 700; color: #333; margin-bottom: 8px; line-height: 1.3;">${details.name}</div>
+            <div style="font-size: 16px; color: #666; margin-bottom: 4px;">${details.artist}</div>
+            <div style="font-size: 13px; color: #999; margin-bottom: 24px;">Added by ${contributorsList}</div>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+            <button onclick="this.closest('[data-modal]').remove(); playRandomTrack();" style="background: #f3f4f6; color: #333; border: none; padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;" 
+                onmouseover="this.style.background='#e5e7eb';" 
+                onmouseout="this.style.background='#f3f4f6';">
+                Pick Again
+            </button>
+            <button onclick="window.open('https://open.spotify.com/track/${details.trackId}', '_blank'); this.closest('[data-modal]').remove();" style="background: #E3836D; color: white; border: none; padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;" 
+                onmouseover="this.style.background='#c97456';" 
+                onmouseout="this.style.background='#E3836D';">
+                Play on Spotify
+            </button>
+        </div>
+    `;
+    
+    const container = document.createElement('div');
+    container.setAttribute('data-modal', 'true');
+    container.appendChild(overlay);
+    overlay.appendChild(modal);
+    
+    // Close on overlay click
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            container.remove();
+        }
+    });
+    
+    document.body.appendChild(container);
+}
+
 function switchTab(tabName) {
             // Save scroll position for current tab before switching
             const currentActive = document.querySelector('.tab-content.active');
@@ -2998,6 +3572,11 @@ function switchTab(tabName) {
             // If switching to genres tab from menu, reset to main genres view
             if (tabName === 'genres') {
                 renderGenres();
+            }
+            
+            // If switching to albums tab, render albums
+            if (tabName === 'albums') {
+                renderAlbums();
             }
             
             // If switching to partners tab, render partners
@@ -4122,7 +4701,11 @@ function showHeaderTooltip(element) {
                     }
                     // Get unique contributors list
                     const contributors = Object.keys(data.contributorCounts);
-                    return [data.name, data.artist, contributors, data.contributorCounts, earliestYear, timesAdded, id, mostRecentDate];
+                    // Get all years this track was added (for filtering purposes)
+                    const allYearsForTrack = data.addedAtDates.length > 0
+                        ? Array.from(new Set(data.addedAtDates.map(date => extractYearFromAddedAt(date)).filter(year => year !== 'N/A')))
+                        : [];
+                    return [data.name, data.artist, contributors, data.contributorCounts, earliestYear, timesAdded, id, mostRecentDate, allYearsForTrack];
                 })
                 .sort((a, b) => {
                     // Primary sort: by number of contributors (descending)
@@ -4145,17 +4728,37 @@ function showHeaderTooltip(element) {
     <div class="search-box">
         <input type="text" id="tracks-search" placeholder="Search tracks..." onkeyup="filterTrackCards(this.value)">
     </div>
+
+    <div id="track-count-display" style="font-size: 14px; color: #666; margin-bottom: 12px; font-weight: 500;">
+        Showing ${sortedTracks.length} of ${sortedTracks.length} track${sortedTracks.length !== 1 ? 's' : ''}
+    </div>
+    
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none;">
+            <div class="toggle-switch-container">
+                <input type="checkbox" id="sort-by-album-toggle" onchange="toggleSortByAlbum()" class="toggle-switch-input">
+                <span class="toggle-switch-slider"></span>
+            </div>
+            <span style="font-size: 14px; color: #333;">Sort By Album</span>
+        </label>
+    </div>
     
     <div style="background: linear-gradient(135deg, #fff5f3 0%, #fffbf9 100%); border-left: 4px solid #E3836D; padding: 16px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="#E3836D" stroke="#E3836D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-        <div style="line-height: 1.2;">
+        <div style="flex: 1; line-height: 1.2;">
             <div style="font-size: 14px; font-weight: 600; color: #333; margin-bottom: 2px;">Select a track to open in Spotify</div>
-            <div style="font-size: 12px; color: #666;">Or click a genre tag to see more tracks in that category</div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 12px;">Or click a genre tag to see more tracks in that category</div>
+            <button onclick="playRandomTrack()" style="background: #E3836D; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s;" 
+                onmouseover="this.style.background='#c97456';" 
+                onmouseout="this.style.background='#E3836D';">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M5 3l14 9-14 9V3z"/></svg>
+                <span>Play Random</span>
+            </button>
         </div>
     </div>
 
     <div class="tracks-cards-grid" id="tracks-cards">
-        ${sortedTracks.map(([name, artist, contributors, contributorCounts, year, count, trackId], idx) => {
+        ${sortedTracks.map(([name, artist, contributors, contributorCounts, year, count, trackId, mostRecentDate, allYearsForTrack], idx) => {
             
             // Get genres for this track (fast O(1) lookup from pre-built map)
             const genreArray = (globalData.trackGenresMap[trackId] || []).slice(0, 3);
@@ -4187,7 +4790,7 @@ function showHeaderTooltip(element) {
             const albumName = trackData ? (trackData['Album Name'] || 'Unknown Album') : 'Unknown Album';
             
             return `
-                <a href="${spotifyUrl}" target="_blank" rel="noopener noreferrer" class="track-card" data-year="${year}" data-name="${name.toLowerCase()}" data-artist="${artist.toLowerCase()}" style="text-decoration: none; color: inherit;">
+                <a href="${spotifyUrl}" target="_blank" rel="noopener noreferrer" class="track-card" data-year="${year}" data-years="${allYearsForTrack.join(',')}" data-name="${name.toLowerCase()}" data-artist="${artist.toLowerCase()}" style="text-decoration: none; color: inherit;">
                     <div class="track-card-with-art">
                         <div class="track-card-album-art">
                             <img src="${albumArtUrl}" alt="${albumName}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" onerror="this.style.display='none';" loading="lazy" />
@@ -4229,6 +4832,7 @@ function showHeaderTooltip(element) {
     </div>
 `;
 document.getElementById('tracks').innerHTML = html;
+            window.totalTrackCount = sortedTracks.length;
             reinitializeLazyLoading();
         }
         
@@ -4250,21 +4854,396 @@ document.getElementById('tracks').innerHTML = html;
         }
         
         function filterTracksByYear(year) {
-    const cards = document.querySelectorAll('.track-card');
+    // Filter both track cards and album cards
+    const cards = document.querySelectorAll('#tracks-cards .track-card[data-year]');
     
     const buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
     
+    let visibleCount = 0;
     cards.forEach(card => {
-        const cardYear = card.getAttribute('data-year');
-        if (year === 'all' || cardYear === year) {
+        const cardYears = card.getAttribute('data-years'); // Get all years
+        const cardYear = card.getAttribute('data-year'); // Keep for backward compatibility
+        
+        let shouldShow = false;
+        if (year === 'all') {
+            shouldShow = true;
+        } else if (cardYears) {
+            // If we have all years, check if the selected year is in the list
+            const yearsArray = cardYears.split(',');
+            shouldShow = yearsArray.includes(year);
+        } else {
+            // Fallback to single year check
+            shouldShow = cardYear === year;
+        }
+        
+        if (shouldShow) {
             card.style.display = '';
+            visibleCount++;
         } else {
             card.style.display = 'none';
         }
     });
+    updateTrackCountDisplay(visibleCount);
 }
+
+        function backToAlbumCardsView() {
+            // First, restore the full tracks page with toggle
+            renderTracks();
+            // Then switch to album view
+            setTimeout(() => {
+                const checkbox = document.getElementById('sort-by-album-toggle');
+                if (checkbox) {
+                    checkbox.checked = true;
+                    renderTracksAsAlbumCards();
+                }
+            }, 0);
+        }
+
+        function toggleSortByAlbum() {
+            const checkbox = document.getElementById('sort-by-album-toggle');
+            
+            if (!checkbox) return;
+            
+            const isSortingByAlbum = checkbox.checked;
+            
+            if (isSortingByAlbum) {
+                // Switch to album view
+                renderTracksAsAlbumCards();
+            } else {
+                // Switch back to normal track view
+                renderTracks();
+            }
+        }
+        
+        function renderTracksAsAlbumCards() {
+            // Group all tracks by album
+            const uniqueTracks = {};
+            const albumMap = {};
+            
+            globalData.raw.forEach(row => {
+                const trackId = row['Track ID'];
+                const trackName = normalize(row['Track Name']);
+                const albumName = row['Album Name'] || 'Unknown Album';
+                const artistName = row['Artist Name(s)'] || 'Unknown Artist';
+                const contributor = row['Added By'];
+                const genre = row['Genre'];
+                const addedAt = row['Added At'];
+                
+                if (trackId && trackName) {
+                    // Track deduplication
+                    if (!uniqueTracks[trackId]) {
+                        uniqueTracks[trackId] = true;
+                        
+                        // Group by album
+                        if (!albumMap[albumName]) {
+                            albumMap[albumName] = {
+                                name: albumName,
+                                artist: artistName,
+                                tracks: [],
+                                contributors: {},
+                                genres: {},
+                                trackId: trackId,
+                                addedAtDates: []
+                            };
+                        }
+                        albumMap[albumName].tracks.push(trackId);
+                    }
+                    
+                    // Track contributors for this album
+                    if (contributor && albumMap[albumName]) {
+                        albumMap[albumName].contributors[contributor] = (albumMap[albumName].contributors[contributor] || 0) + 1;
+                    }
+                    
+                    // Track genres for this album
+                    if (genre && albumMap[albumName]) {
+                        const genres = String(genre).split(/[;,]/).map(g => g.trim()).filter(g => g);
+                        genres.forEach(g => {
+                            albumMap[albumName].genres[g] = (albumMap[albumName].genres[g] || 0) + 1;
+                        });
+                    }
+                    
+                    // Track added dates for this album
+                    if (addedAt && albumMap[albumName]) {
+                        albumMap[albumName].addedAtDates.push(addedAt);
+                    }
+                }
+            });
+            
+            // Sort albums: first by track count (descending), then by earliest year added (newest first)
+            const sortedAlbums = Object.entries(albumMap)
+                .filter(([albumName, data]) => data.tracks.length > 1) // Filter out single-track albums
+                .sort((a, b) => {
+                    const aTrackCount = a[1].tracks.length;
+                    const bTrackCount = b[1].tracks.length;
+                    
+                    // Primary sort: by track count (descending)
+                    if (aTrackCount !== bTrackCount) {
+                        return bTrackCount - aTrackCount;
+                    }
+                    
+                    // Secondary sort: by earliest year added (newest first)
+                    const getEarliestYear = (data) => {
+                        if (!data.addedAtDates || data.addedAtDates.length === 0) {
+                            return 0;
+                        }
+                        const yearsForAlbum = data.addedAtDates
+                            .map(date => extractYearFromAddedAt(date))
+                            .filter(year => year !== 'N/A')
+                            .map(year => parseInt(year))
+                            .sort((a, b) => b - a); // Sort descending to get newest
+                        return yearsForAlbum.length > 0 ? yearsForAlbum[0] : 0;
+                    };
+                    
+                    const aYear = getEarliestYear(a[1]);
+                    const bYear = getEarliestYear(b[1]);
+                    return bYear - aYear; // Newest first
+                });
+            
+            // Build album cards HTML using track card structure
+            const cardsHtml = `<div class="tracks-cards-grid" id="tracks-cards">
+                ${sortedAlbums.map(([albumName, data]) => {
+                    const artist = data.artist;
+                    const trackCount = data.tracks.length;
+                    const contributors = Object.keys(data.contributors || {});
+                    
+                    // Extract earliest year from album's added dates
+                    let earliestYear = 'N/A';
+                    if (data.addedAtDates && data.addedAtDates.length > 0) {
+                        const yearsForAlbum = data.addedAtDates
+                            .map(date => extractYearFromAddedAt(date))
+                            .filter(year => year !== 'N/A')
+                            .map(year => parseInt(year))
+                            .sort((a, b) => a - b);
+                        if (yearsForAlbum.length > 0) {
+                            earliestYear = yearsForAlbum[0].toString();
+                        }
+                    }
+                    
+                    // Get top genres (up to 3)
+                    const topGenres = Object.entries(data.genres || {})
+                        .sort((a, b) => b[1] - a[1])
+                        .slice(0, 3)
+                        .map(([genre]) => genre);
+                    
+                    // Build genre tags
+                    const genreTagsHtml = topGenres.length > 0 
+                        ? topGenres.map(genre => '<span class="track-card-genre-tag" onclick="event.preventDefault(); event.stopPropagation(); showGenreDetails(\'' + genre.replace(/'/g, "\\'") + '\');" style="cursor: pointer;">' + genre + '</span>').join('')
+                        : '<span style="color: #999; font-size: 12px; font-weight: 400;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: white; border-radius: 50%; margin-right: 6px; vertical-align: middle; border: 2px solid #E3836D;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E3836D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>Sorry - this hasn\'t been tagged yet.</span>';
+                    
+                    // Build contributor badges
+                    const contributorBadges = contributors.map(c => {
+                        const color = getContributorColor(c);
+                        const parts = c.split('.');
+                        const initials = (parts[0][0] + (parts[1]?.[0] || '')).toUpperCase();
+                        return '<span class="track-card-contributor-badge" style="background: ' + color + ';" title="' + c + '">' + initials + '</span>';
+                    }).join('');
+                    
+                    const contributorText = contributors.length === 1 
+                        ? 'Added by ' + getFormattedContributorName(contributors[0])
+                        : 'Added by ' + contributors.length + ' contributors';
+                    
+                    // Get artwork from first track
+                    const albumArtUrl = data.trackId ? 'https://raw.githubusercontent.com/mcmillon/music-week-album-art/main/' + data.trackId + '.jpg' : '';
+                    
+                    return `<div class="track-card" data-name="${albumName.toLowerCase()}" data-year="${earliestYear}" onclick="showAlbumTracksFromToggle('${albumName.replace(/'/g, "\\'")}')" style="cursor: pointer;">
+                        <div class="track-card-with-art">
+                            <div class="track-card-album-art">
+                                <img src="${albumArtUrl}" alt="${albumName}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" onerror="this.style.display='none';" loading="lazy" />
+                            </div>
+                            <div class="track-card-content">
+                                <div class="track-card-top">
+                                    <div class="track-card-info">
+                                        <div class="track-card-name">${albumName}</div>
+                                        <div class="track-card-artist">${artist}</div>
+                                        <div style="font-size: 12px; color: #999; font-style: italic; line-height: 1.2; margin-top: 4px;">${trackCount} tracks</div>
+                                    </div>
+                                    <div class="track-card-year-added">
+                                        <div class="track-card-year-label">Added</div>
+                                        <div class="track-card-year-value">${earliestYear}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="track-card-genres-row">
+                            <div class="contributor-card-info-label">Genres</div>
+                            <div class="track-card-genre-tags">
+                                ${genreTagsHtml}
+                            </div>
+                        </div>
+                        <div class="track-card-footer">
+                            <div class="track-card-added-by">
+                                <div class="track-card-contributors-badges">
+                                    ${contributorBadges}
+                                </div>
+                                <span class="track-card-contributors-text">${contributorText}</span>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('')}
+            </div>`;
+            
+            // Replace the entire grid container to ensure proper CSS application
+            const cardsContainer = document.getElementById('tracks-cards');
+            if (cardsContainer && cardsContainer.parentNode) {
+                cardsContainer.parentNode.replaceChild(
+                    new DOMParser().parseFromString(cardsHtml, 'text/html').body.firstChild,
+                    cardsContainer
+                );
+            }
+        }
+        
+        function showAlbumTracksFromToggle(albumName) {
+            // Get all tracks for this album from the raw data
+            const albumTracks = globalData.raw.filter(row => row['Album Name'] === albumName);
+            
+            // Consolidate by Track ID to get unique tracks
+            const uniqueTracks = {};
+            albumTracks.forEach(row => {
+                const trackId = row['Track ID'];
+                const trackName = row['Track Name'];
+                
+                if (trackId && trackName && !uniqueTracks[trackId]) {
+                    uniqueTracks[trackId] = {
+                        name: trackName,
+                        artist: row['Artist Name(s)'],
+                        addedAtDates: [],
+                        contributorCounts: {}
+                    };
+                }
+                
+                if (trackId) {
+                    const addedAt = row['Added At'];
+                    if (addedAt) {
+                        uniqueTracks[trackId].addedAtDates.push(addedAt);
+                    }
+                    
+                    const contributor = row['Added By'];
+                    if (contributor) {
+                        uniqueTracks[trackId].contributorCounts[contributor] = (uniqueTracks[trackId].contributorCounts[contributor] || 0) + 1;
+                    }
+                }
+            });
+            
+            // Convert to array and sort
+            const consolidatedArray = Object.entries(uniqueTracks)
+                .map(([trackId, data]) => {
+                    let earliestYear = 'N/A';
+                    let mostRecentDate = null;
+                    const uniqueDatesSet = new Set(data.addedAtDates);
+                    const timesAdded = uniqueDatesSet.size;
+                    
+                    if (data.addedAtDates.length > 0) {
+                        const yearsForTrack = data.addedAtDates.map(date => extractYearFromAddedAt(date))
+                            .filter(year => year !== 'N/A')
+                            .map(year => parseInt(year))
+                            .sort((a, b) => a - b);
+                        if (yearsForTrack.length > 0) {
+                            earliestYear = yearsForTrack[0].toString();
+                        }
+                        const sortedDates = data.addedAtDates.sort((a, b) => new Date(b) - new Date(a));
+                        mostRecentDate = new Date(sortedDates[0]);
+                    }
+                    
+                    const contributors = Object.keys(data.contributorCounts);
+                    return [data.name, data.artist, contributors, data.contributorCounts, earliestYear, timesAdded, trackId, mostRecentDate];
+                })
+                .sort((a, b) => {
+                    if (b[2].length !== a[2].length) return b[2].length - a[2].length;
+                    if (b[7] && a[7]) return b[7] - a[7];
+                    if (b[7]) return -1;
+                    if (a[7]) return 1;
+                    return 0;
+                });
+            
+            // Store globally for load more
+            window.allAlbumTracks = consolidatedArray;
+            window.currentAlbumTracksDisplayed = 20;
+            
+            // Build page structure
+            const trackCount = consolidatedArray.length;
+            const html = `<div style="margin-bottom: 20px;"><button onclick="backToAlbumCardsView();" style="background: #F8F9FA; color: black; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>Back to Album View</button></div><h2 style="margin-bottom: 20px;">Tracks from "${albumName}" (${trackCount})</h2><div class="search-box"><input type="text" placeholder="Search..." onkeyup="filterTrackCards(this.value)"></div><div id="album-tracks-container"></div>${trackCount > 20 ? `<div id="load-more-container" style="text-align: center; margin-top: 30px;"><button onclick="loadMoreAlbumTracks();" style="background: #E3836D; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">Load More (${trackCount - 20} remaining)</button></div>` : ''}`;
+            
+            document.getElementById('tracks').innerHTML = html;
+            
+            // Render first batch of cards in next iteration
+            setTimeout(() => {
+                const firstBatch = consolidatedArray.slice(0, 20);
+                let cardsHtml = '<div class="tracks-cards-grid">';
+                
+                firstBatch.forEach(([name, artist, contributors, contributorCounts, year, count, trackId]) => {
+                    const spotifyUrl = `https://open.spotify.com/track/${trackId}`;
+                    const albumArtUrl = `https://raw.githubusercontent.com/mcmillon/music-week-album-art/main/${trackId}.jpg`;
+                    const album = (globalData.trackDataMap[trackId]?.['Album Name']) || 'Unknown Album';
+                    
+                    // Genre tags
+                    const genres = globalData.trackGenresMap[trackId] || [];
+                    let genreHtml = '';
+                    for (let i = 0; i < Math.min(genres.length, 3); i++) {
+                        genreHtml += `<span class="track-card-genre-tag" onclick="event.preventDefault(); event.stopPropagation(); showGenreDetails('${genres[i].replace(/'/g, "\\'")}')" style="cursor: pointer;">${genres[i]}</span>`;
+                    }
+                    if (!genreHtml) {
+                        genreHtml = '<span style="color: #999; font-size: 12px; font-weight: 400;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: white; border-radius: 50%; margin-right: 6px; vertical-align: middle; border: 2px solid #E3836D;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E3836D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>Sorry - this hasn\'t been tagged yet.</span>';
+                    }
+                    
+                    // Contributor badges
+                    let contributorBadges = '';
+                    for (let i = 0; i < contributors.length; i++) {
+                        const c = contributors[i];
+                        const color = getContributorColor(c);
+                        const parts = c.split('.');
+                        const initials = (parts[0][0] + (parts[1]?.[0] || '')).toUpperCase();
+                        const multiplicity = contributorCounts[c] > 1 ? `×${contributorCounts[c]}` : '';
+                        contributorBadges += `<span class="track-card-contributor-badge" style="background: ${color};" title="${c}${multiplicity ? ' (' + multiplicity + ')' : ''}">${initials}${multiplicity ? '<sup>' + contributorCounts[c] + '</sup>' : ''}</span>`;
+                    }
+                    
+                    const contributorText = contributors.length === 1 
+                        ? `Added by ${getFormattedContributorName(contributors[0])}${contributorCounts[contributors[0]] > 1 ? ' (' + contributorCounts[contributors[0]] + 'x)' : ''}`
+                        : `Added by ${contributors.length} contributors`;
+                    
+                    const releaseDate = globalData.trackReleaseMap[trackId] 
+                        ? formatDate(globalData.trackReleaseMap[trackId])
+                        : 'N/A';
+                    
+                    cardsHtml += `<a href="${spotifyUrl}" target="_blank" rel="noopener noreferrer" class="track-card" data-year="${year}" data-name="${name.toLowerCase()}" data-artist="${artist.toLowerCase()}" style="text-decoration: none; color: inherit;">
+                        <div class="track-card-with-art">
+                            <div class="track-card-album-art">
+                                <img src="${albumArtUrl}" alt="${album}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" onerror="this.style.display='none';" loading="lazy">
+                            </div>
+                            <div class="track-card-content">
+                                <div class="track-card-top">
+                                    <div class="track-card-info">
+                                        <div class="track-card-name">${name}</div>
+                                        <div class="track-card-artist">${artist}</div>
+                                        <div class="track-card-album">${album}</div>
+                                    </div>
+                                    <div class="track-card-year-added">
+                                        <div class="track-card-year-label">Added</div>
+                                        <div class="track-card-year-value">${year}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="track-card-genres-row">
+                            <div class="contributor-card-info-label">Genres</div>
+                            <div class="track-card-genre-tags">${genreHtml}</div>
+                        </div>
+                        <div class="track-card-footer">
+                            <div class="track-card-added-by">
+                                <div class="track-card-contributors-badges">${contributorBadges}</div>
+                                <span class="track-card-contributors-text">${contributorText}</span>
+                            </div>
+                            <div class="track-card-release-date">${releaseDate}</div>
+                        </div>
+                    </a>`;
+                });
+                
+                cardsHtml += '</div>';
+                document.getElementById('album-tracks-container').innerHTML = cardsHtml;
+                reinitializeLazyLoading();
+            }, 0);
+        }
 
         function filterArtistsByYear(year) {
             const cards = document.querySelectorAll('#artists-cards .card');
@@ -4284,182 +5263,301 @@ document.getElementById('tracks').innerHTML = html;
         }
 
         function renderAlbums() {
-            // Use pre-built album data map from initialization
-            const albumDataMap = globalData.albumDataMap;
+            // Use albums data from dedicated albums CSV only
+            if (!globalData.albumsDataMapFromCSV || !globalData.albumsFromCSV) {
+                document.getElementById('albums').innerHTML = '<div style="padding: 20px; text-align: center; color: #999;">Loading albums...</div>';
+                return;
+            }
             
-            // Build album years map for sorting
-            const albumYears = {};
-            Object.keys(globalData.albums).forEach(idx => {
-                const [albumNameDisplayed] = globalData.albums[idx];
-                const normalizedName = normalize(albumNameDisplayed);
-                const data = albumDataMap[normalizedName];
-                if (data) {
-                    albumYears[albumNameDisplayed] = data.year;
-                }
+            const albumsToUse = globalData.albumsFromCSV;
+            const dataMap = globalData.albumsDataMapFromCSV;
+            
+            // Build album data with contributor counts
+            const albumsWithData = albumsToUse.map(([albumName]) => {
+                const data = dataMap[albumName] || {};
+                const contributorCount = Object.keys(data.contributors || {}).length;
+                const year = data.year || 'N/A';
+                return { name: albumName, data, contributorCount, year };
             });
             
+            // Sort by contributor count (descending) then by year (newest first)
+            albumsWithData.sort((a, b) => {
+                if (b.contributorCount !== a.contributorCount) {
+                    return b.contributorCount - a.contributorCount;
+                }
+                // If same contributor count, sort by year (newest first)
+                if (a.year !== 'N/A' && b.year !== 'N/A') {
+                    return b.year - a.year;
+                }
+                return 0;
+            });
+            
+            // Build album years and contributors for filters
             const uniqueYears = {};
-            Object.values(albumYears).forEach(year => {
-                if (year !== 'N/A') {
-                    uniqueYears[year] = true;
+            const allContributors = new Set();
+            albumsWithData.forEach(album => {
+                if (album.year !== 'N/A') {
+                    uniqueYears[album.year] = true;
                 }
+                Object.keys(album.data.contributors || {}).forEach(c => allContributors.add(c));
             });
+            
             const sortedYears = Object.keys(uniqueYears).sort((a, b) => b - a);
+            const sortedContributors = Array.from(allContributors).sort();
             
             const html = `
-                <div class="filter-buttons">
-                    <button class="filter-btn active" onclick="filterAlbumsByYear('all')">All</button>
-                    ${sortedYears.map(year => `
-                        <button class="filter-btn" onclick="filterAlbumsByYear('${year}')">${year}</button>
-                    `).join('')}
-                </div>
-                
-                <div class="search-box">
-                    <input type="text" placeholder="Search albums..." onkeyup="filterAlbumCards(this.value)">
-                </div>
-                
-                <div style="background: linear-gradient(135deg, #fff5f3 0%, #fffbf9 100%); border-left: 4px solid #E3836D; padding: 16px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#E3836D" stroke="#E3836D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                    <div style="line-height: 1.2;">
-                        <div style="font-size: 14px; font-weight: 600; color: #333; margin-bottom: 2px;">Select an album to view more tracks</div>
-                        <div style="font-size: 12px; color: #666;">Or click a genre tag to see more tracks in that category</div>
+    <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterAlbumsByYear('all')">All</button>
+        ${sortedYears.map(year => `
+            <button class="filter-btn" onclick="filterAlbumsByYear('${year}')">${year}</button>
+        `).join('')}
+    </div>
+    
+    <div class="search-box">
+        <input type="text" placeholder="Search albums..." onkeyup="filterAlbumCards(this.value)">
+    </div>
+
+    <div id="album-count-display" style="font-size: 14px; color: #666; margin-bottom: 12px; font-weight: 500;">
+        Showing ${albumsWithData.length} of ${albumsWithData.length} album${albumsWithData.length !== 1 ? 's' : ''}
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none;">
+            <span style="font-size: 14px; color: #333;">Filter by Contributor:</span>
+            <select id="albumContributorFilter" onchange="filterAlbumsByContributor(this.value)" style="padding: 8px 12px; border: 2px solid #E3836D; border-radius: 6px; font-size: 14px; cursor: pointer;">
+                <option value="all">All Contributors</option>
+                ${sortedContributors.map(c => `<option value="${c}">${c}</option>`).join('')}
+            </select>
+        </label>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, #fff5f3 0%, #fffbf9 100%); border-left: 4px solid #E3836D; padding: 16px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#E3836D" stroke="#E3836D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        <div style="flex: 1; line-height: 1.2;">
+            <div style="font-size: 14px; font-weight: 600; color: #333; margin-bottom: 2px;">Select an album to open in Spotify</div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 12px;">Or click a genre tag to see more tracks in that category</div>
+            <button onclick="playRandomAlbum()" style="background: #E3836D; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s;" 
+                onmouseover="this.style.background='#c97456';" 
+                onmouseout="this.style.background='#E3836D';">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M5 3l14 9-14 9V3z"/></svg>
+                <span>Play Random</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="tracks-cards-grid" id="albums-cards">
+        ${albumsWithData.map(album => {
+            const albumName = album.name;
+            const data = album.data;
+            const fullArtist = data.artist || 'Unknown';
+            // Extract only the first artist name
+            const artist = fullArtist.split(/[;,&]/)[0].trim();
+            const year = data.year || 'N/A';
+            
+            // Get top genres
+            const topGenres = Object.entries(data.genres || {})
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3)
+                .map(([genre]) => genre);
+            
+            // Get all contributors for data attribute
+            const allContributorsStr = Object.keys(data.contributors || {}).join(',');
+            
+            // Get contributors
+            const contributors = Object.keys(data.contributors || {});
+            
+            // Hardcoded artwork for special albums
+            const artworkMap = {
+                'Diamond Jubilee': 'diamond_jubilee.jpg',
+                'YANDHI (leaks)': 'yandhi_leaks.jpg'
+            };
+            
+            // Use album ID for artwork (or hardcoded filename for special albums)
+            const albumId = data.albumId || '';
+            const artworkFileName = artworkMap[albumName] || (albumId + '.jpg');
+            const albumArtUrl = 'https://raw.githubusercontent.com/mcmillon/music-week-album-art/main/' + artworkFileName;
+            
+            // Build contributor badges
+            const contributorBadges = contributors.map(c => {
+                const color = getContributorColor(c);
+                const parts = c.split('.');
+                const initials = (parts[0][0] + (parts[1]?.[0] || '')).toUpperCase();
+                return '<span class="track-card-contributor-badge" style="background: ' + color + ';" title="' + c + '">' + initials + '</span>';
+            }).join('');
+            
+            const contributorText = contributors.length === 1 
+                ? 'Added by ' + getFormattedContributorName(contributors[0])
+                : 'Added by ' + contributors.length + ' contributors';
+            
+            // Hardcoded YouTube links for special albums
+            const youtubeLinks = {
+                'Diamond Jubilee': 'https://www.youtube.com/watch?v=_LJi5na897Y',
+                'YANDHI (leaks)': 'https://www.youtube.com/watch?v=KWSIkBS8ASc'
+            };
+            
+            let linkUrl = youtubeLinks[albumName] || (data.albumId ? 'https://open.spotify.com/album/' + data.albumId : '');
+            const spotifyUrl = linkUrl;
+            const releaseDate = data.releaseDate || '';
+            const genreTagsHtml = topGenres.length > 0 
+                ? topGenres.map(genre => '<span class="track-card-genre-tag" onclick="event.preventDefault(); event.stopPropagation(); showGenreDetails(\'' + genre.replace(/'/g, "\\'") + '\');" style="cursor: pointer;">' + genre + '</span>').join('')
+                : '<span style="color: #999; font-size: 12px; font-weight: 400;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: white; border-radius: 50%; margin-right: 6px; vertical-align: middle; border: 2px solid #E3836D;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E3836D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>Sorry - this hasn\'t been tagged yet.</span>';
+            
+            return spotifyUrl 
+                ? `<a href="${spotifyUrl}" target="_blank" rel="noopener noreferrer" class="track-card" data-name="${albumName.toLowerCase()}" data-artist="${artist.toLowerCase()}" data-year="${year}" data-contributors="${allContributorsStr}" style="text-decoration: none; color: inherit;">
+                    <div class="track-card-with-art">
+                        <div class="track-card-album-art">
+                            <img src="${albumArtUrl}" alt="${albumName}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" onerror="this.style.display='none';" loading="lazy" />
+                        </div>
+                        <div class="track-card-content">
+                            <div class="track-card-top">
+                                <div class="track-card-info">
+                                    <div class="track-card-name">${albumName}</div>
+                                    <div class="track-card-artist">${artist}</div>
+                                </div>
+                                <div class="track-card-year-added">
+                                    <div class="track-card-year-label">Added</div>
+                                    <div class="track-card-year-value">${year}</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            `;
+                    <div class="track-card-genres-row">
+                        <div class="contributor-card-info-label">Genres</div>
+                        <div class="track-card-genre-tags">
+                            ${genreTagsHtml}
+                        </div>
+                    </div>
+                    <div class="track-card-footer">
+                        <div class="track-card-added-by">
+                            <div class="track-card-contributors-badges">
+                                ${contributorBadges}
+                            </div>
+                            <span class="track-card-contributors-text">${contributorText}</span>
+                        </div>
+                        ${releaseDate ? `<div class="track-card-release-date">${releaseDate}</div>` : ''}
+                    </div>
+                </a>`
+                : `<div class="track-card" data-name="${albumName.toLowerCase()}" data-year="${year}" data-contributors="${allContributorsStr}" style="cursor: pointer;">
+                    <div class="track-card-with-art">
+                        <div class="track-card-album-art">
+                            <img src="${albumArtUrl}" alt="${albumName}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" onerror="this.style.display='none';" loading="lazy" />
+                        </div>
+                        <div class="track-card-content">
+                            <div class="track-card-top">
+                                <div class="track-card-info">
+                                    <div class="track-card-name">${albumName}</div>
+                                    <div class="track-card-artist">${artist}</div>
+                                </div>
+                                <div class="track-card-year-added">
+                                    <div class="track-card-year-label">Added</div>
+                                    <div class="track-card-year-value">${year}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track-card-genres-row">
+                        <div class="contributor-card-info-label">Genres</div>
+                        <div class="track-card-genre-tags">
+                            ${genreTagsHtml}
+                        </div>
+                    </div>
+                    <div class="track-card-footer">
+                        <div class="track-card-added-by">
+                            <div class="track-card-contributors-badges">
+                                ${contributorBadges}
+                            </div>
+                            <span class="track-card-contributors-text">${contributorText}</span>
+                        </div>
+                        ${releaseDate ? `<div class="track-card-release-date">${releaseDate}</div>` : ''}
+                    </div>
+                </div>`;
+        }).join('')}
+    </div>
+`;
             
             document.getElementById('albums').innerHTML = html;
             
-            // Build cards HTML in next iteration
-            setTimeout(() => {
-                let cardsHtml = '<div class="albums-grid" id="albums-cards">';
-                
-                for (let idx = 0; idx < globalData.albums.length; idx++) {
-                    const [albumName, count] = globalData.albums[idx];
-                    const normalizedName = normalize(albumName);
-                    const data = albumDataMap[normalizedName] || {};
-                    
-                    const artist = Object.keys(data.artists || {})[0] || 'Unknown';
-                    const year = data.year || 'N/A';
-                    
-                    // Get top genres
-                    const topGenres = Object.entries(data.genres || {})
-                        .sort((a, b) => b[1] - a[1])
-                        .slice(0, 3)
-                        .map(([genre]) => genre);
-                    
-                    // Get top contributors
-                    const topContributors = Object.entries(data.contributors || {})
-                        .sort((a, b) => b[1] - a[1])
-                        .slice(0, 5);
-                    
-                    const totalContributors = Object.keys(data.contributors || {}).length;
-                    const hasMore = totalContributors > 5;
-                    
-                    // Build contributor badges
-                    let contributorBadges = '';
-                    for (let i = 0; i < topContributors.length; i++) {
-                        const c = topContributors[i][0];
-                        const color = getContributorColor(c);
-                        const parts = c.split('.');
-                        const initials = (parts[0][0] + (parts[1]?.[0] || '')).toUpperCase();
-                        contributorBadges += '<span class="album-card-contributor-badge" style="background: ' + color + ';" title="' + c + '">' + initials + '</span>';
-                    }
-                    
-                    if (hasMore) {
-                        const moreCount = totalContributors - 5;
-                        contributorBadges += '<span class="album-card-contributor-badge" style="background: #999; font-size: 9px; display: flex; align-items: center; justify-content: center;">+' + moreCount + '</span>';
-                    }
-                    
-                    // Build genre tags
-                    let genreTagsHtml = '';
-                    for (let i = 0; i < topGenres.length; i++) {
-                        genreTagsHtml += '<span class="album-card-genre-tag" onclick="event.preventDefault(); event.stopPropagation(); showGenreDetails(\'' + topGenres[i].replace(/'/g, "\\'") + '\')" style="cursor: pointer;">' + topGenres[i] + '</span>';
-                    }
-                    if (!genreTagsHtml) {
-                        genreTagsHtml = '<span style="color: #999; font-size: 12px; font-weight: 400;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: white; border-radius: 50%; margin-right: 6px; vertical-align: middle; border: 2px solid #E3836D;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E3836D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>Sorry - this hasn\'t been tagged yet.</span>';
-                    }
-                    
-                    const genreSection = '<div class="album-card-genres-row" onclick="event.stopPropagation();"><div class="album-card-genres-label">Genres</div><div class="album-card-genre-tags">' + genreTagsHtml + '</div></div>';
-                    
-                    const contributorText = totalContributors === 1 
-                        ? 'Added by 1 contributor'
-                        : 'Added by ' + totalContributors + ' contributors';
-                    
-                    // Get track ID for this album to pull artwork (use first from trackIds)
-                    let trackId = '';
-                    if (data.trackIds && data.trackIds.size > 0) {
-                        trackId = Array.from(data.trackIds)[0];
-                    }
-                    
-                    const artworkUrl = trackId ? 'https://raw.githubusercontent.com/mcmillon/music-week-album-art/main/' + trackId + '.jpg' : '';
-                    const artHtml = artworkUrl 
-                        ? '<img src="' + artworkUrl + '" alt="Album Art" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px; background: #f3f4f6;">'
-                        : '<div style="width: 100%; height: 100%; background: #f3f4f6; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 12px;">Album Art</div>';
-                    
-                    cardsHtml += '<div class="album-card" data-name="' + albumName.toLowerCase() + '" data-year="' + year + '" onclick="showAlbumDetails(\'' + albumName.replace(/'/g, "\\'") + '\')" >' +
-                        '<div class="album-card-with-art">' +
-                        '<div class="album-card-art">' +
-                        artHtml +
-                        '</div>' +
-                        '<div class="album-card-content">' +
-                        '<div class="album-card-top">' +
-                        '<div class="album-card-info">' +
-                        '<div class="album-card-name">' + albumName + '</div>' +
-                        '<div class="album-card-artist">' + artist + '</div>' +
-                        '<div class="album-card-track-count">' + count + ' tracks</div>' +
-                        '</div>' +
-                        '<div class="album-card-year-section">' +
-                        '<div class="album-card-year-label">Added</div>' +
-                        '<div class="album-card-year-value">' + year + '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        genreSection +
-                        '<div class="album-card-footer">' +
-                        '<div class="album-card-added-by">' +
-                        '<div class="album-card-contributors-badges">' + contributorBadges + '</div>' +
-                        '<span class="album-card-contributors-text">' + contributorText + '</span>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>';
-                }
-                
-                cardsHtml += '</div>';
-                document.getElementById('albums').innerHTML += cardsHtml;
-            }, 0);
+            // Initialize filters after cards are in DOM
+            window.albumYearFilter = 'all';
+            window.albumContributorFilter = 'all';
+            window.totalAlbumCount = albumsWithData.length;
+            
+            reinitializeLazyLoading();
+        }
+        
+        function updateAlbumCountDisplay(count) {
+            const countDisplay = document.getElementById('album-count-display');
+            if (countDisplay) {
+                const totalCount = window.totalAlbumCount || 0;
+                countDisplay.textContent = `Showing ${count} of ${totalCount} album${totalCount !== 1 ? 's' : ''}`;
+            }
         }
         
         function filterAlbumCards(searchTerm) {
-            const cards = document.querySelectorAll('#albums-cards .album-card');
+            const cards = document.querySelectorAll('#albums-cards .track-card[data-year]');
             const filter = searchTerm.toLowerCase();
+            const yearFilter = window.albumYearFilter || 'all';
+            const contributorFilter = window.albumContributorFilter || 'all';
             
+            let visibleCount = 0;
             cards.forEach(card => {
                 const name = card.getAttribute('data-name');
+                const artist = card.getAttribute('data-artist') || '';
+                const cardYear = card.getAttribute('data-year');
+                const cardContributorsStr = card.getAttribute('data-contributors') || '';
+                const cardContributors = cardContributorsStr ? cardContributorsStr.split(',').map(c => c.trim()) : [];
                 
-                if (name.includes(filter)) {
+                const nameMatch = name.includes(filter);
+                const artistMatch = artist.includes(filter);
+                const yearMatch = yearFilter === 'all' || String(cardYear) === String(yearFilter);
+                const contributorMatch = contributorFilter === 'all' || cardContributors.includes(contributorFilter);
+                
+                if ((nameMatch || artistMatch) && yearMatch && contributorMatch) {
                     card.style.display = '';
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+            updateAlbumCountDisplay(visibleCount);
         }
         
         function filterAlbumsByYear(year) {
-            const cards = document.querySelectorAll('#albums-cards .album-card');
-            
-            const buttons = document.querySelectorAll('.filter-btn');
+            const buttons = document.querySelectorAll('#albums .filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
+            window.albumYearFilter = year;
+            applyAlbumFilters();
+        }
+        
+        function filterAlbumsByContributor(contributor) {
+            window.albumContributorFilter = contributor;
+            applyAlbumFilters();
+        }
+        
+        function applyAlbumFilters() {
+            const cards = document.querySelectorAll('#albums-cards .track-card[data-year]');
+            const yearFilter = window.albumYearFilter || 'all';
+            const contributorFilter = window.albumContributorFilter || 'all';
+            
+            let visibleCount = 0;
             cards.forEach(card => {
                 const cardYear = card.getAttribute('data-year');
-                if (year === 'all' || cardYear === year) {
+                const cardContributorsStr = card.getAttribute('data-contributors') || '';
+                const cardContributors = cardContributorsStr ? cardContributorsStr.split(',').map(c => c.trim()) : [];
+                
+                const yearMatch = yearFilter === 'all' || String(cardYear) === String(yearFilter);
+                const contributorMatch = contributorFilter === 'all' || cardContributors.includes(contributorFilter);
+                
+                if (yearMatch && contributorMatch) {
                     card.style.display = '';
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+            updateAlbumCountDisplay(visibleCount);
         }
         
         function showAlbumDetails(albumName) {
@@ -4718,10 +5816,9 @@ document.getElementById('tracks').innerHTML = html;
             
             // Store playlists in global data for detail view
             globalData.playlists = playlists;
+            window.totalPlaylistCount = playlists.length;
             
             const html = `
-                <h2 style="margin-bottom: 20px;">All Playlists (${playlists.length})</h2>
-                
                 <div style="margin-bottom: 20px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
                     <div>
                         <label style="font-weight: 600; margin-right: 10px;">Filter by Contributor:</label>
@@ -4745,11 +5842,22 @@ document.getElementById('tracks').innerHTML = html;
                 <div class="search-box">
                     <input type="text" placeholder="Search playlists..." onkeyup="filterTable(this, 'playlists-table')">
                 </div>
-                <div style="background: linear-gradient(135deg, #fff5f3 0%, #fffbf9 100%); border-left: 4px solid #E3836D; padding: 16px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#E3836D" stroke="#E3836D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                    <div style="line-height: 1.2;">
-                        <div style="font-size: 14px; font-weight: 600; color: #333; margin-bottom: 2px;">Select any playlist</div>
-                        <div style="font-size: 12px; color: #666;">Open in Spotify to listen</div>
+
+                <div id="playlist-count-display" style="font-size: 14px; color: #666; margin-bottom: 12px; font-weight: 500;">
+                    Showing ${playlists.length} playlists
+                </div>
+
+                <div style="background: linear-gradient(135deg, #fff5f3 0%, #fffbf9 100%); border-left: 4px solid #E3836D; padding: 16px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 16px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#E3836D" stroke="#E3836D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    <div style="flex: 1; line-height: 1.2;">
+                        <div style="font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;">Select any playlist</div>
+                        <div style="font-size: 12px; color: #666; margin-bottom: 12px;">Open in Spotify to listen</div>
+                        <button onclick="playRandomPlaylist()" style="background: #E3836D; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s;" 
+                            onmouseover="this.style.background='#c97456';" 
+                            onmouseout="this.style.background='#E3836D';">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M5 3l14 9-14 9V3z"/></svg>
+                            <span>Play Random</span>
+                        </button>
                     </div>
                 </div>
                 <div class="grid">
@@ -4773,6 +5881,9 @@ document.getElementById('tracks').innerHTML = html;
         <div class="card-info">
           <div class="card-title">${playlist.name}</div>
           <div class="card-contributor-names">${playlist.contributors.map(c => {
+            if (c === 'trey.mcmillon') {
+              return 'Trey McMillon';
+            }
             const parts = c.split('.');
             const firstName = parts[0] ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) : '';
             const lastName = parts[1] ? parts[1].charAt(0).toUpperCase() + parts[1].slice(1) : '';
@@ -4793,6 +5904,9 @@ document.getElementById('tracks').innerHTML = html;
                 contributor: 'all',
                 year: 'all'
             };
+            
+            // Update count display
+            updatePlaylistCountDisplay();
         }
         
         function sortPlaylistsByColumn(column) {
@@ -4871,6 +5985,18 @@ rows.forEach((row) => {
             applyPlaylistFilters();
         }
         
+        function updatePlaylistCountDisplay() {
+            const countDisplay = document.getElementById('playlist-count-display');
+            if (countDisplay) {
+                // Get the playlist container and only count cards within it
+                const playlistContainer = document.getElementById('playlists');
+                const playlistCards = playlistContainer ? Array.from(playlistContainer.querySelectorAll('.card')).filter(card => card.style.display !== 'none') : [];
+                const visibleCount = playlistCards.length;
+                const totalCount = window.totalPlaylistCount || 0;
+                countDisplay.textContent = `Showing ${visibleCount} of ${totalCount} playlist${totalCount !== 1 ? 's' : ''}`;
+            }
+        }
+        
         function filterPlaylistsByYear(year) {
             window.playlistFilters.year = year;
             
@@ -4910,13 +6036,14 @@ rows.forEach((row) => {
         
         card.style.display = showCard ? '' : 'none';
     });
+    updatePlaylistCountDisplay();
 }
 
 function formatYearsActive(yearList) {
     if (!yearList) return 'N/A';
     
     const years = yearList.split(', ');
-    const allYears = ['2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+    const allYears = ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
     
     // Check if contributor has been active in all years
     const isAllYears = allYears.every(year => years.includes(year));
@@ -4939,6 +6066,33 @@ function formatYearsActive(yearList) {
                 `;
                 return;
             }
+            
+            // Count playlists per contributor
+            const playlistsByContributor = {};
+            Object.values(globalData.playlistDataMap).forEach(playlist => {
+                playlist.contributors.forEach(contributor => {
+                    if (!playlistsByContributor[contributor]) {
+                        playlistsByContributor[contributor] = 0;
+                    }
+                    playlistsByContributor[contributor]++;
+                });
+            });
+            
+            // Sort contributors alphabetically by first name
+            const sortedContributors = globalData.contributors.map(([name, count]) => {
+                const parts = name.split('.');
+                let firstName = parts[0] ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) : '';
+                let lastName = parts[1] ? parts[1].charAt(0).toUpperCase() + parts[1].slice(1) : '';
+                if (name === 'trey.mcmillon') {
+                    firstName = 'Trey';
+                    lastName = 'McMillon';
+                }
+                return { name, count, firstName, lastName };
+            }).sort((a, b) => {
+                const nameA = `${a.firstName} ${a.lastName}`.toLowerCase();
+                const nameB = `${b.firstName} ${b.lastName}`.toLowerCase();
+                return nameA.localeCompare(nameB);
+            });
             
             const top5Genres = globalData.genres.slice(0, 5).map(g => g[0]);
             
@@ -5017,10 +6171,10 @@ function formatYearsActive(yearList) {
 </div>
 
 <div class="contributors-cards-grid" id="contributors-cards">
-    ${globalData.contributors.map(([name, count], idx) => {
+    ${sortedContributors.map(({ name, count, firstName, lastName }) => {
 const years = globalData.contributorYears[name] || {};
 const yearList = Object.keys(years).sort((a, b) => a - b); // Sort ascending to find first year
-const allYears = ['2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+const allYears = ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
 
 // Check if contributor is on a streak (2 consecutive years: most recent year and prior year)
 let isConsecutive = false;
@@ -5055,16 +6209,13 @@ if (yearList.length >= 2) {
         const initials = (parts[0][0] + (parts[1]?.[0] || '')).toUpperCase();
         
         // Format display name inline
-        let firstName = parts[0] ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) : '';
-        let lastName = parts[1] ? parts[1].charAt(0).toUpperCase() + parts[1].slice(1) : '';
-        if (name === 'trey.mcmillon') {
-            firstName = 'Trey';
-            lastName = 'McMillon';
-        }
-        const displayName = lastName ? `${firstName} ${lastName}` : firstName;
+        let displayName = lastName ? `${firstName} ${lastName}` : firstName;
         
         const popData = globalData.contributorPopularity[name];
         const avgPop = popData ? Math.round(popData.total / popData.count) : 0;
+        
+        // Get playlist count for this contributor
+        const playlistCount = playlistsByContributor[name] || 0;
         
         return `
             <div class="contributor-card" onclick="showContributorDetails('${name.replace(/'/g, "\\'")}')" data-name="${name}">
@@ -5113,7 +6264,7 @@ if (yearList.length >= 2) {
                 </div>
 
                 <div class="contributor-card-footer">
-                    <span class="contributor-card-rank">#${idx + 1}</span>
+                    <span class="contributor-card-playlists">${playlistCount} Playlist${playlistCount !== 1 ? 's' : ''}</span>
                 </div>
             </div>
         `;
@@ -5994,13 +7145,16 @@ rows.forEach((row) => {
     // If searching playlist cards
     if (tableId === 'playlists-table') {
         const cards = document.querySelectorAll('.card');
+        let visibleCount = 0;
         cards.forEach(card => {
             const title = card.querySelector('.card-title')?.textContent.toLowerCase() || '';
             const creator = card.querySelector('.card-creator')?.textContent.toLowerCase() || '';
             
             const found = title.includes(filter) || creator.includes(filter);
             card.style.display = found ? '' : 'none';
+            if (found) visibleCount++;
         });
+        updatePlaylistCountDisplay();
     } else {
         // Keep existing table search logic for other tabs
         const table = document.getElementById(tableId);
